@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<meta charset="UTF-8">
+		<title>Simulação</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script type="text/javascript" src="src/index.js"></script>
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+			integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+			crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+			crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+			integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+			crossorigin="anonymous"></script>
+		
+		<style>
+			input[type="text"] {width: 50px;}
+			th{font-weight: normal;}
+			.resultado-3 td{text-align: center;}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="entrada col-lg-12">
+				<h1>Tabela de simulação (lavagem de carros)</h1>
+				<br />
+			</div>
+			<div class="entrada col-lg-12">
+				<div class="panel panel-default col-lg-4" style="padding: 0;">
+					<div class="panel-heading">Tempo a ser simulado (minutos):</div>
+					<div class="panel-body">
+						<input type="text" class="form-control" id="tempo" value="180" /><br />
+						<button type="submit" class="btn btn-default" onclick="simular();">Iniciar...</button>
+						<button type="submit" class="btn btn-default" onclick="limpar();">Limpar</button>
+					</div>
+				</div>
+				<div class="panel panel-default col-lg-4" style="padding: 0;">
+					<div class="panel-heading">TEC</div>
+					<div class="panel-body">
+						<div class="col-lg-12 tec">
+							<div class="col-lg-6">
+								<input type="text" id="tec" class="form-control" value="" /><br />
+								<button type="submit" class="btn btn-default" onclick="adicionarTec();">Adicionar TEC</button>
+							</div>
+							<div class="col-lg-6">
+								<ul class="list-group col-lg-6" id="tec">
+									<li class="list-group-item">10</li>
+									<li class="list-group-item">12</li>
+									<li class="list-group-item">15</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="panel panel-default col-lg-4" style="padding: 0;">
+					<div class="panel-heading">TS</div>
+					<div class="panel-body">
+						<div class="ts">
+							<div class="col-lg-6">
+								<input type="text" id="ts" class="form-control" value="" /><br />
+								<button type="submit" class="btn btn-default" onclick="adicionarTs();">Adicionar TS</button>
+							</div>
+							<div class="col-lg-6">
+								<ul class="list-group col-lg-6" id="ts">
+									<li class="list-group-item">9</li>
+									<li class="list-group-item">10</li>
+									<li class="list-group-item">11</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-lg-12">
+				<table class="resultado-1 table table-hover">
+					<thead>
+						<tr>
+							<th>Cliente</th>
+							<th>Tempo desde a última chegada (minutos)</th>
+							<th>Tempo de Chegada no Relógio</th>
+							<th>Tempo de Serviço (minutos)</th>
+							<th>Tempo de Início do Serviço no relógio</th>
+							<th>Tempo do cliente na fila (minutos)</th>
+							<th>Tempo final do serviço no relógio</th>
+							<th>Tempo do Cliente no Sistema (minutos)</th>
+							<th>Tempo livre do operador (minutos)</th>
+						</tr>
+					</thead>
+					<tfoot>
+						<tr style="font-weight: bold;">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tfoot>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-lg-6">
+				<br />
+				<table class="resultado-2 table table-hover col-lg-6">
+					<tr>
+						<td class="col-lg-10">Total de Clientes</td>
+						<td class="col-lg-1" id="total-clientes">0.00</td>
+						<td class="col-lg-1">Quantidade</td>
+					</tr>
+					<tr>
+						<td>Tempo Médio de Espera na Fila</td>
+						<td class="col-lg-1" id="media-espera">0.00</td>
+						<td class="col-lg-1">minutos</td>
+					</tr>
+					<tr>
+						<td>Probabilidade de um cliente esperar na fila</td>
+						<td class="col-lg-1" id="probabilidade-cliente-fila">0.00</td>
+						<td class="col-lg-1">%</td>
+					</tr>
+					<tr>
+						<td>Probabilidade do Operador Livre</td>
+						<td class="col-lg-1" id="probabilidade-operador-livre">0.00</td>
+						<td class="col-lg-1">%</td>
+					</tr>
+					<tr>
+						<td class="col-lg-2">Tempo Médio do Serviço</td>
+						<td class="col-lg-1" id="media-servico">0.00</td>
+						<td class="col-lg-1">minutos</td>
+					</tr>
+					<tr>
+						<td>Tempo Médio Gasto</td>
+						<td class="col-lg-1" id="tempo-medio-gasto">0.00</td>
+						<td class="col-lg-1">minutos</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div style="display:none;" class="conteudo-adicionar">
+			<tr style="">
+				<td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+			</tr>
+		</div>
+	</body>
+</html>
